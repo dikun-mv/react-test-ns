@@ -1,19 +1,25 @@
 import React, { useState, useCallback } from 'react';
 
 import { Container, Input, Item } from './Components';
-import { useFilter, useURLQuery } from './hooks';
-import data from './data';
+import { useFilter, useURLQuery, useData } from './hooks';
+import { mockedFetch } from './data';
 
 const App = () => {
+  const { response, loading } = useData(mockedFetch);
+
   const [search, setSearch] = useState('');
 
   const onChangeSearch = useCallback((event) => {
     setSearch(event.target.value);
   }, []);
 
-  const filtered = useFilter(data, search);
+  const filtered = useFilter(response, search);
 
   useURLQuery(search, setSearch);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <Container>
