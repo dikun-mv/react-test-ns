@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { Container, Input, Item } from './Components';
-import { useFilter } from './hooks';
+import { useFilter, useURLQuery } from './hooks';
 import data from './data';
 
 const App = () => {
@@ -12,6 +12,8 @@ const App = () => {
   }, []);
 
   const filtered = useFilter(data, search);
+
+  useURLQuery(search, setSearch);
 
   return (
     <Container>
